@@ -21,6 +21,8 @@ app.get('/words', controllers.get);
 
 app.post('/words', controllers.post);
 
+app.patch('/words', controllers.patch);
+
 app.delete('/words', controllers.delete);
 
 app.listen(process.env.PORT);

@@ -59,22 +59,34 @@ const App = (props) => {
         setWords(response.data);
       })
       .catch(err => console.error('ERROR: FAILED TO ADD TO DATABASE, WORD EXISTS ALREADY'))
-  }
+  };
 
   const handleDeletion = (word) => {
     axios.delete('/words', {word: word})
       .then(response => {
         setWords(response.data);
       })
-  }
+  };
+
+  const handlePatch = (wordObj) => {
+    wordObj.definition = document.getElementById(wordObj.word + '-definition').innerText;
+    wordObj.word = document.getElementById(wordObj.word).innerText;
+
+    axios.patch('/words', wordObj)
+      .then(response => {
+        console.log('SUCCESS');
+        console.log(response.data);
+        setWords(response.data);
+      });
+  };
 
   return (
     <div>
       <div className='forms'>
       <Search setSearch={setSearch} />
-      <AddWordForm handleSubmission={handleSubmission}/>
+      <AddWordForm handleSubmission={handleSubmission} />
       </div>
-      <WordList words={words} handleDeletion={handleDeletion}/>
+      <WordList words={words} handleDeletion={handleDeletion} handlePatch={handlePatch} />
     </div>
   )
 }
