@@ -43,11 +43,28 @@ const App = (props) => {
     }
   }, [search])
 
+  const handleSubmission = (e) => {
+    e.preventDefault();
+
+    const word = {
+      word: e.target[0].value,
+      definition: e.target[1].value
+    };
+
+    document.getElementById('word-text-bar').value = '';
+    document.getElementById('description-text-bar').value = '';
+
+    axios.post(e.target.action, word)
+      .then(response => {
+        setWords(response.data);
+      })
+  }
+
   return (
     <div>
       <div className='forms'>
       <Search setSearch={setSearch} />
-      {/* <AddWordForm /> */}
+      <AddWordForm handleSubmission={handleSubmission}/>
       </div>
       <WordList words={words} />
     </div>

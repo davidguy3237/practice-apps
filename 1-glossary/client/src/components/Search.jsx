@@ -3,7 +3,7 @@ import React from 'react';
 const Search = ({setSearch}) => {
   return (
     <div className='search'>
-      <input type='text' id='search-bar' placeholder='Search...'
+      <input type='search' id='search-bar' placeholder='Search...'
       onChange={e => {setSearch(e.target.value)}}/>
     </div>
   );
