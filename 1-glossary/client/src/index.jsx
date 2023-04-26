@@ -58,6 +58,7 @@ const App = (props) => {
       .then(response => {
         setWords(response.data);
       })
+      .catch(err => console.error('ERROR: FAILED TO ADD TO DATABASE, WORD EXISTS ALREADY'))
   }
 
   const handleDeletion = (word) => {

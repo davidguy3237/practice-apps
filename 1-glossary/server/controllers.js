@@ -14,7 +14,8 @@ module.exports = {
     const {word, definition} = req.body;
     Word.create({word, definition})
       .then(() => Word.find().sort('word'))
-      .then(words => res.json(words));
+      .then(words => res.json(words))
+      .catch(err => res.sendStatus(400));
   },
   delete: function(req, res) {
     Word.deleteOne(req.body)
