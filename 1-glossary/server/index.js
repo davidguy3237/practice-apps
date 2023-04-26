@@ -21,5 +21,7 @@ app.get('/words', controllers.get);
 
 app.post('/words', controllers.post);
 
+app.delete('/words', controllers.delete);
+
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

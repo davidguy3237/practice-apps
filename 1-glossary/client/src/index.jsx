@@ -54,7 +54,14 @@ const App = (props) => {
     document.getElementById('word-text-bar').value = '';
     document.getElementById('description-text-bar').value = '';
 
-    axios.post(e.target.action, word)
+    axios.post('/words', word)
+      .then(response => {
+        setWords(response.data);
+      })
+  }
+
+  const handleDeletion = (word) => {
+    axios.delete('/words', {word: word})
       .then(response => {
         setWords(response.data);
       })
@@ -66,7 +73,7 @@ const App = (props) => {
       <Search setSearch={setSearch} />
       <AddWordForm handleSubmission={handleSubmission}/>
       </div>
-      <WordList words={words} />
+      <WordList words={words} handleDeletion={handleDeletion}/>
     </div>
   )
 }

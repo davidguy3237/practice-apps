@@ -8,14 +8,17 @@ module.exports = {
         $options: 'i'
       }})
       .sort('word')
-      .then(words => {
-        res.json(words);
-      })
+      .then(words => res.json(words));
   },
   post: function(req, res) {
     const {word, definition} = req.body;
     Word.create({word, definition})
       .then(() => Word.find().sort('word'))
-      .then(results => res.json(results));
+      .then(words => res.json(words));
+  },
+  delete: function(req, res) {
+    Word.deleteOne(req.body)
+      .then(() => Word.find().sort('word'))
+      .then(words => res.json(words))
   }
 };
