@@ -43,7 +43,7 @@ const App = (props) => {
     }
   }, [search])
 
-  const handleSubmission = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const word = {
@@ -69,22 +69,18 @@ const App = (props) => {
   };
 
   const handlePatch = (wordObj) => {
-    wordObj.definition = document.getElementById(wordObj.word + '-definition').innerText;
-    wordObj.word = document.getElementById(wordObj.word).innerText;
+    wordObj.definition = document.getElementById(wordObj.word + '-definition').value;
+    wordObj.word = document.getElementById(wordObj.word).value;
 
     axios.patch('/words', wordObj)
-      .then(response => {
-        console.log('SUCCESS');
-        console.log(response.data);
-        setWords(response.data);
-      });
+      .then(response => setWords(response.data));
   };
 
   return (
     <div>
       <div className='forms'>
       <Search setSearch={setSearch} />
-      <AddWordForm handleSubmission={handleSubmission} />
+      <AddWordForm handleSubmit={handleSubmit} />
       </div>
       <WordList words={words} handleDeletion={handleDeletion} handlePatch={handlePatch} />
     </div>

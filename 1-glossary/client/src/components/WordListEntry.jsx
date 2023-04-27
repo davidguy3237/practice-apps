@@ -7,8 +7,8 @@ const WordListEntry = ({wordObj, handleDeletion, handlePatch}) => {
   const {word, definition} = wordObj;
 
   const onEdit = () => {
-    let newDefinition = document.getElementById(word + '-definition').innerText;
-    let newWord = document.getElementById(word).innerText;
+    let newDefinition = document.getElementById(word + '-definition').value;
+    let newWord = document.getElementById(word).value;
     if (editable && (word !== newWord || definition !== newDefinition)) {
       setEditable(!editable);
       handlePatch(wordObj);
@@ -19,8 +19,20 @@ const WordListEntry = ({wordObj, handleDeletion, handlePatch}) => {
 
   return (
     <div className='word-list-entry'>
-      <h3 id={word} contentEditable={editable}>{word}</h3>
-      <p id={word + '-definition'} contentEditable={editable}>{definition}</p>
+      {
+        editable ? (
+          <div className='word-container'>
+            <input type='text' id={word} defaultValue={word} autoFocus />
+            <br />
+            <input type='text' id={word + '-definition'} defaultValue={definition} />
+          </div>
+        ) : (
+          <div className='word-container'>
+            <h3 id={word}>{word}</h3>
+            <p id={word + '-definition'}>{definition}</p>
+          </div>
+        )
+      }
       <button className='edit-button' onClick={onEdit}>{editable ? 'Done' : 'Edit'}</button>
       <button className='delete-button' onClick={() => {
         handleDeletion(wordObj);
