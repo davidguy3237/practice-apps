@@ -1,10 +1,10 @@
 /**
- * 
+ *
  * Based on Josh Comeau's CSS Reset: https://www.joshwcomeau.com/css/custom-css-reset/.
- * 
+ *
  * Feel free to edit this file as needed.
- * 
- */ 
+ *
+ */
 
 *,
 *::before,
@@ -57,4 +57,52 @@ main {
   max-width: 840px;
   padding: 16px;
   margin: auto;
+}
+
+/* ======================================CUSTOM EDITS BELOW====================================== */
+
+header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.word-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.word-list-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #777777;
+  margin-bottom: 10px;
+}
+
+.word-container {
+  margin: 10px;
+}
+
+button {
+  margin-right: 10px;
+}
+
+.add-word {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-word > * {
+  margin: 5px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
 }

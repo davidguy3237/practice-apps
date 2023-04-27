@@ -33,8 +33,10 @@ const WordListEntry = ({wordObj, handleDelete, handlePatch}) => {
           </div>
         )
       }
-      <button className='edit-button' onClick={onEdit}>{editable ? 'Done' : 'Edit'}</button>
-      <button className='delete-button' onClick={() => handleDelete(wordObj)}>Delete</button>
+      <div className='word-buttons'>
+        <button className='edit-button' onClick={onEdit}>{editable ? 'Done' : 'Edit'}</button>
+        <button className='delete-button' onClick={() => handleDelete(wordObj)}>Delete</button>
+      </div>
     </div>
   );
 };

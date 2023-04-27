@@ -73,11 +73,12 @@ const App = (props) => {
 
   return (
     <div>
+      <header>Glossary</header>
       <div className='forms'>
       <Search setSearch={setSearch} />
       <AddWordForm handleSubmit={handleSubmit} />
       </div>
-      <WordList words={words} handleDelete={handleDelete} handlePatch={handlePatch} />
+      <WordList words={words} search={search} handleDelete={handleDelete} handlePatch={handlePatch} />
     </div>
   )
 }
