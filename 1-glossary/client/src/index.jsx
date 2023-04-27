@@ -61,8 +61,8 @@ const App = (props) => {
       .catch(err => console.error('ERROR: FAILED TO ADD TO DATABASE, WORD EXISTS ALREADY'))
   };
 
-  const handleDeletion = (word) => {
-    axios.delete('/words', {word: word})
+  const handleDeletion = (wordObj) => {
+    axios.delete('/words', {data: wordObj})
       .then(response => {
         setWords(response.data);
       })
