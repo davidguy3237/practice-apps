@@ -1,7 +1,7 @@
 import React from 'react';
 const {useState} = React;
 
-const WordListEntry = ({wordObj, handleDeletion, handlePatch}) => {
+const WordListEntry = ({wordObj, handleDelete, handlePatch}) => {
   const [editable, setEditable] = useState(false);
 
   const {word, definition} = wordObj;
@@ -34,9 +34,7 @@ const WordListEntry = ({wordObj, handleDeletion, handlePatch}) => {
         )
       }
       <button className='edit-button' onClick={onEdit}>{editable ? 'Done' : 'Edit'}</button>
-      <button className='delete-button' onClick={() => {
-        handleDeletion(wordObj);
-      }}>Delete</button>
+      <button className='delete-button' onClick={() => handleDelete(wordObj)}>Delete</button>
     </div>
   );
 };

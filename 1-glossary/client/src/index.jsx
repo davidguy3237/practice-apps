@@ -12,7 +12,9 @@ const App = (props) => {
   const [search, setSearch] = useState('');
   let isMounted = useRef(false);
   let searchTimeout = null;
-  useEffect(() => { // GET list of words on mount
+
+  // GET initial list of words on mount
+  useEffect(() => {
     axios.get('/words')
     .then(response => {
       console.log('MOUNT', response.data);
@@ -21,7 +23,7 @@ const App = (props) => {
   }, []);
 
   // Since useEffect always runs once on mount,
-  // I'm using useRef to check if the component is mounted yet
+  // I'm using useRef to check if the component is mounted
   // before a search GET request is done.
   useEffect(() => {
     if (isMounted.current) {
@@ -31,13 +33,10 @@ const App = (props) => {
             search: search
           }
         })
-        .then(response => {
-          console.log('SEARCH', response.data)
-          setWords(response.data);
-        })
+        .then(response => setWords(response.data))
       }, 500);
 
-      return () => {clearTimeout(searchTimeout);}
+      return () => clearTimeout(searchTimeout);
     } else {
       isMounted.current = true;
     }
@@ -55,17 +54,13 @@ const App = (props) => {
     document.getElementById('description-text-bar').value = '';
 
     axios.post('/words', word)
-      .then(response => {
-        setWords(response.data);
-      })
+      .then(response => setWords(response.data))
       .catch(err => console.error('ERROR: FAILED TO ADD TO DATABASE, WORD EXISTS ALREADY'))
   };
 
-  const handleDeletion = (wordObj) => {
+  const handleDelete = (wordObj) => {
     axios.delete('/words', {data: wordObj})
-      .then(response => {
-        setWords(response.data);
-      })
+      .then(response => setWords(response.data))
   };
 
   const handlePatch = (wordObj) => {
@@ -82,7 +77,7 @@ const App = (props) => {
       <Search setSearch={setSearch} />
       <AddWordForm handleSubmit={handleSubmit} />
       </div>
-      <WordList words={words} handleDeletion={handleDeletion} handlePatch={handlePatch} />
+      <WordList words={words} handleDelete={handleDelete} handlePatch={handlePatch} />
     </div>
   )
 }
