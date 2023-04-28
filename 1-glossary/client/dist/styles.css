@@ -87,7 +87,7 @@ header {
   margin: 10px;
 }
 
-button {
+.edit-button, .delete-button {
   margin-right: 10px;
 }
 
@@ -105,4 +105,14 @@ button {
 .search {
   display: flex;
   justify-content: center;
+}
+
+.pages-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-display {
+  margin: 10px;
 }

@@ -14,19 +14,17 @@ module.exports = {
     const {word, definition} = req.body;
     Word.create({word, definition})
       .then(() => Word.find().sort('word'))
-      .then(words => res.json(words))
+      .then(words => res.status(201).json(words))
       .catch(err => res.sendStatus(400));
   },
   patch: function (req, res) {
     const update = {word: req.body.word, definition: req.body.definition};
 
     Word.findOneAndUpdate({_id: req.body._id}, update)
-      .then(() => Word.find().sort('word'))
-      .then(words => res.json(words))
+      .then(words => res.sendStatus(200))
   },
   delete: function(req, res) {
     Word.deleteOne(req.body)
-      .then(() => Word.find().sort('word'))
-      .then(words => res.json(words))
+      .then(words => res.sendStatus(200))
   }
 };

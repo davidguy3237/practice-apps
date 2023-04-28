@@ -5,21 +5,20 @@ const {useState, useEffect, useRef} = React;
 import AddWordForm from './components/AddWordForm.jsx';
 import WordList from './components/WordList.jsx';
 import Search from './components/Search.jsx';
+import Page from './components/Page.jsx';
 
 const App = (props) => {
 
   const [words, setWords] = useState([]);
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
   let isMounted = useRef(false);
   let searchTimeout = null;
 
   // GET initial list of words on mount
   useEffect(() => {
     axios.get('/words')
-    .then(response => {
-      console.log('MOUNT', response.data);
-      setWords(response.data);
-    })
+    .then(response => setWords(response.data))
   }, []);
 
   // Since useEffect always runs once on mount,
@@ -27,20 +26,21 @@ const App = (props) => {
   // before a search GET request is done.
   useEffect(() => {
     if (isMounted.current) {
-      searchTimeout = setTimeout(() => {
-        axios.get('/words', {
-          params: {
-            search: search
-          }
-        })
-        .then(response => setWords(response.data))
-      }, 500);
-
+      searchTimeout = setTimeout(handleSearch, 500);
       return () => clearTimeout(searchTimeout);
     } else {
       isMounted.current = true;
     }
   }, [search])
+
+  const handleSearch = () => {
+    axios.get('/words', {
+      params: {
+        search: search
+      }
+    })
+    .then(res => setWords(res.data))
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +52,7 @@ const App = (props) => {
 
     document.getElementById('word-text-bar').value = '';
     document.getElementById('description-text-bar').value = '';
+    document.getElementById('search-bar').value = '';
 
     axios.post('/words', word)
       .then(response => setWords(response.data))
@@ -60,7 +61,7 @@ const App = (props) => {
 
   const handleDelete = (wordObj) => {
     axios.delete('/words', {data: wordObj})
-      .then(response => setWords(response.data))
+      .then(response => handleSearch())
   };
 
   const handlePatch = (wordObj) => {
@@ -68,7 +69,7 @@ const App = (props) => {
     wordObj.word = document.getElementById(wordObj.word).value;
 
     axios.patch('/words', wordObj)
-      .then(response => setWords(response.data));
+      .then(response => handleSearch());
   };
 
   return (
@@ -79,6 +80,7 @@ const App = (props) => {
       <AddWordForm handleSubmit={handleSubmit} />
       </div>
       <WordList words={words} search={search} handleDelete={handleDelete} handlePatch={handlePatch} />
+      <Page page={page} setPage={setPage} />
     </div>
   )
 }
